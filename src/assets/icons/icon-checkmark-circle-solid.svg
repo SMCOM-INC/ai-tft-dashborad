@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 50 50">
+  <defs>
+    <clipPath id="clip-icon-checkmark-circle-solid">
+      <rect width="50" height="50"/>
+    </clipPath>
+  </defs>
+  <g id="icon-checkmark-circle-solid" clip-path="url(#clip-icon-checkmark-circle-solid)">
+    <g id="checkmark-circle-outline" transform="translate(-48 -48)">
+      <path id="Path_1" data-name="Path 1" d="M73,48A25,25,0,1,1,48,73,25.028,25.028,0,0,1,73,48Zm0,46.154A21.154,21.154,0,1,0,51.846,73,21.178,21.178,0,0,0,73,94.154Z" transform="translate(0 0)"/>
+      <path id="Path_2" data-name="Path 2" d="M152.846,183.077a1.923,1.923,0,0,1-1.429-.637l-6.923-7.692a1.923,1.923,0,0,1,2.859-2.573l5.444,6.048,14.731-17.537a1.923,1.923,0,0,1,2.945,2.474L154.319,182.39a1.923,1.923,0,0,1-1.44.686Z" transform="translate(-84.461 -98.538)"/>
+    </g>
+  </g>
+</svg>

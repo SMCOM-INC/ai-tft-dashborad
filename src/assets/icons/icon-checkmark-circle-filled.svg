@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 50 50">
+  <defs>
+    <clipPath id="clip-icon-checkmark-circle-filled">
+      <rect width="50" height="50"/>
+    </clipPath>
+  </defs>
+  <g id="icon-checkmark-circle-filled" clip-path="url(#clip-icon-checkmark-circle-filled)">
+    <path id="checkmark-circle" d="M73,48A25,25,0,1,0,98,73,25.029,25.029,0,0,0,73,48ZM86.011,64.621,69.857,83.852a1.923,1.923,0,0,1-1.442.686h-.032a1.923,1.923,0,0,1-1.429-.637L60.03,76.209a1.923,1.923,0,1,1,2.858-2.572l5.444,6.048L83.066,62.148a1.923,1.923,0,1,1,2.945,2.474Z" transform="translate(-48 -48)"/>
+  </g>
+</svg>

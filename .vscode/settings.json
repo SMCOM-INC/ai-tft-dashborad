@@ -1,0 +1,37 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "cSpell.words": [
+    "apartmant",
+    "apass",
+    "apay",
+    "apexcharts",
+    "composables",
+    "daontech",
+    "datepicker",
+    "dompurify",
+    "jszip",
+    "kakao",
+    "LOBBYPHONE",
+    "MEMBERINFO",
+    "notout",
+    "pageable",
+    "pinia",
+    "popperjs",
+    "pretendard",
+    "Regist",
+    "resizer",
+    "rushstack",
+    "Swal",
+    "sweetalert",
+    "tanstack",
+    "VITE",
+    "vuepic",
+    "vueup",
+    "vueuse"
+  ],
+  "vue3snippets.enable-compile-vue-file-on-did-save-code": true
+}

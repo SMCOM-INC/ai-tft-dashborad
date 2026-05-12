@@ -1,0 +1,4 @@
+echo '☘︎ Check Error'
+
+npx lint-staged
+

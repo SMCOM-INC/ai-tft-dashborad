@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 60 60">
+  <g id="icon-alert-circle-gray">
+    <g id="alert-circle-outline" transform="translate(-47.5 -47.5)">
+      <path id="Path_1" d="M77.5,48A29.5,29.5,0,1,1,48,77.5,29.533,29.533,0,0,1,77.5,48Zm0,54.462A24.962,24.962,0,1,0,52.538,77.5,24.99,24.99,0,0,0,77.5,102.462Z" fill="currentColor"/>
+      <path id="Path_2" d="M237.339,144.05a3.083,3.083,0,0,1,3.08,3.223l-.813,17.3a2.269,2.269,0,0,1-4.533,0l-.814-17.3a3.083,3.083,0,0,1,3.051-3.227Z" transform="translate(-159.839 -82.427)" fill="currentColor"/>
+      <path id="Path_3" d="M238.837,333.583a2.837,2.837,0,1,1,2.837-2.837A2.837,2.837,0,0,1,238.837,333.583Z" transform="translate(-161.337 -240.211)" fill="currentColor"/>
+    </g>
+  </g>
+</svg>

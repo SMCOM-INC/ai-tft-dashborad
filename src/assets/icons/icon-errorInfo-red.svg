@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 50 50">
+  <defs>
+    <clipPath id="clip-icon-errorInfo-red">
+      <rect width="50" height="50"/>
+    </clipPath>
+  </defs>
+  <g id="icon-errorInfo-red" clip-path="url(#clip-icon-errorInfo-red)">
+    <g id="warning-outline" transform="translate(-37.61 -48.36)">
+      <path id="패스_31" data-name="패스 31" d="M82.12,96.971H43.1a5.495,5.495,0,0,1-4.837-8.1L57.771,52.64a5.5,5.5,0,0,1,9.677,0L86.957,88.871a5.495,5.495,0,0,1-4.837,8.1ZM62.61,53.413A1.794,1.794,0,0,0,61,54.377L41.488,90.608a1.832,1.832,0,0,0,1.612,2.7H82.12a1.832,1.832,0,0,0,1.612-2.7L64.223,54.377A1.794,1.794,0,0,0,62.61,53.413Z" transform="translate(0)" fill="rgba(239,68,68,0.5)"/>
+      <path id="패스_32" data-name="패스 32" d="M236.75,173.44a2.489,2.489,0,0,1,2.486,2.6L238.58,190a1.832,1.832,0,0,1-3.659,0l-.657-13.966a2.489,2.489,0,0,1,2.462-2.6Z" transform="translate(-174.141 -109.53)" fill="rgba(239,68,68,0.5)"/>
+      <path id="패스_33" data-name="패스 33" d="M238.289,361.829a2.289,2.289,0,1,1,2.289-2.289A2.289,2.289,0,0,1,238.289,361.829Z" transform="translate(-175.68 -272.299)" fill="rgba(239,68,68,0.5)"/>
+    </g>
+  </g>
+</svg>

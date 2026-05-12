@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 50 50">
+  <defs>
+    <clipPath id="clip-Icon-lock-solid-red">
+      <rect width="50" height="50"/>
+    </clipPath>
+  </defs>
+  <g id="Icon-lock-solid-red" clip-path="url(#clip-Icon-lock-solid-red)">
+    <path id="lock-closed" d="M108.759,33.575h-1.6V25.586a9.586,9.586,0,1,0-19.173,0v7.989h-1.6A6.4,6.4,0,0,0,80,39.966V57.541a6.4,6.4,0,0,0,6.391,6.391h22.368a6.4,6.4,0,0,0,6.391-6.391V39.966A6.4,6.4,0,0,0,108.759,33.575Zm-4.793,0H91.184V25.586a6.391,6.391,0,1,1,12.782,0Z" transform="translate(-72.575 -14.966)" fill="#ef4444"/>
+  </g>
+</svg>

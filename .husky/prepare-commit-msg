@@ -1,0 +1,43 @@
+# 커밋 메시지 파일 읽기
+commit_message=$(cat "$1")
+
+# Merge 커밋인지 확인 (.git/MERGE_HEAD 파일 존재 여부 또는 메시지가 "Merge"로 시작)
+if [ -f .git/MERGE_HEAD ] || echo "$commit_message" | grep -q "^Merge"; then
+  exit 0
+fi
+
+# 허용된 커밋 prefix 목록
+allowed_prefixes="feat|fix|refactor|rename|remove|style|chore|docs|hotfix|test|perf"
+
+# 커밋 메시지가 허용된 prefix로 시작하는지 확인 (prefix + 띄어쓰기 + 콜론 + 띄어쓰기)
+if ! echo "$commit_message" | grep -qE "^($allowed_prefixes) : "; then
+    echo ""
+    echo "🚨 COMMIT REJECTED!"
+    echo ""
+    echo "❌ 커밋 메시지 형식이 올바르지 않습니다."
+    echo ""
+    echo "✅ 다음 형식을 사용해주세요: prefix [띄어쓰기] : [띄어쓰기] [메시지]"
+    echo ""
+    echo "📋 사용 가능한 prefix :"
+    echo ""
+    echo "   feat     : 새로운 기능 추가"
+    echo "   fix      : 버그 및 기타 수정"
+    echo "   refactor : 코드 리팩토링"
+    echo "   rename   : 네이밍 수정, 파일 이동"
+    echo "   remove   : 파일 삭제"
+    echo "   style    : style 관련 변경"
+    echo "   chore    : 빌드 부분 혹은 패키지 매니저, config 수정, 모듈 추가"
+    echo "   docs     : 문서 작성"
+    echo "   hotfix   : 긴급 작업"
+    echo "   test     : 테스트 코드 관련"
+    echo "   perf     : 퍼포먼스 효율 개선 관련"
+    echo ""
+    echo "📝 올바른 예시: feat : 아파트 관리비 조회 기능 추가"
+    echo ""
+    echo "💡 입력된 커밋 메시지: \"$commit_message\""
+    echo ""
+    exit 1
+fi
+
+echo "✅ 커밋 메시지 형식이 올바릅니다!"
+exit 0
