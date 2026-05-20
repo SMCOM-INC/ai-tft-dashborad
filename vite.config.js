@@ -1,6 +1,5 @@
 import { fileURLToPath, URL } from 'node:url';
 
-import { sentryVitePlugin } from '@sentry/vite-plugin';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { defineConfig } from 'vite';
@@ -30,10 +29,6 @@ export default defineConfig({
         ],
       },
     }),
-    sentryVitePlugin({
-      org: 'smcom',
-      project: 'apt-admin-fe',
-    }),
   ],
   resolve: {
     alias: {
@@ -47,16 +42,19 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    proxy: {
+      '/api/ai': {
+        target: 'http://121.157.1.9:8005',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/ai/, ''),
+      },
+    },
   },
   build: {
     rollupOptions: {
       output: {
         manualChunks: (id) => {
           if (id.indexOf('node_modules') !== -1) {
-            // Sentry 관련 패키지들을 하나의 chunk로 묶음 (초기화 순서 문제 방지)
-            if (id.includes('@sentry')) {
-              return 'vendor-sentry';
-            }
             const module = id.split('node_modules/').pop().split('/')[0];
             return `vendor-${module}`;
           }

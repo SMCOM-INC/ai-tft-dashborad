@@ -2,6 +2,127 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --motion-micro: 150ms;
+    --motion-transition: 250ms;
+    --motion-page: 350ms;
+    --motion-data: 700ms;
+    --ease-out-quint: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-quint: cubic-bezier(0.7, 0, 0.84, 0);
+    --ease-std: cubic-bezier(0.4, 0, 0.2, 1);
+    --stagger-step: 40ms;
+
+    /* 인터랙션용 변수 — JS 또는 inline style에서 동적으로 설정 */
+    --mx: 50%;
+    --my: 50%;
+    --i: 0;
+  }
+
+  @keyframes fade-up {
+    0% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-slide {
+    0% {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes accent-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(94, 106, 210, 0);
+    }
+    50% {
+      box-shadow: 0 0 0 6px rgba(94, 106, 210, 0.08);
+    }
+  }
+}
+
+@layer utilities {
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .focus-ring:focus-visible {
+    outline: 2px solid #5e6ad2;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(94, 106, 210, 0.12);
+  }
+
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      #f4f5f8 0%,
+      #ecedf1 50%,
+      #f4f5f8 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s linear infinite;
+  }
+
+  .spotlight {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .spotlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      300px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(94, 106, 210, 0.05),
+      transparent 40%
+    );
+    opacity: 0;
+    transition: opacity var(--motion-transition) var(--ease-std);
+  }
+
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+
+  .stagger-item {
+    opacity: 0;
+    animation: fade-up var(--motion-page) var(--ease-out-quint) both;
+    animation-delay: calc(var(--i, 0) * var(--stagger-step));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 html {
   font-family:
     'Pretendard',
@@ -84,8 +205,8 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-text-fill-color: #000;
-  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
-  box-shadow: 0 0 0px 1000px #fff inset;
+  -webkit-box-shadow: 0 0 0 1000px #fff inset;
+  box-shadow: 0 0 0 1000px #fff inset;
   transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -96,7 +217,7 @@ textarea:focus {
   outline: none;
 }
 textarea::-webkit-scrollbar {
-  display: auto;
+  display: initial;
 }
 
 select {
@@ -111,10 +232,6 @@ select:focus {
 
 :disabled {
   cursor: not-allowed;
-}
-
-button:hover {
-  opacity: 0.8;
 }
 
 .icon-chevron-down {

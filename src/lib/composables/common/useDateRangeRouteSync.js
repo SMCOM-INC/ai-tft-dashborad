@@ -4,6 +4,14 @@ import useNavigate from '@/lib/composables/common/useNavigate.js';
 import useQueryString from '@/lib/composables/common/useQueryString.js';
 import { getDateRange } from '@/lib/utils/formatDate.js';
 
+// defaultRange를 문자열 키 또는 [startDate, endDate] 배열로 해석
+const resolveDefaultRange = (defaultRange) => {
+  if (Array.isArray(defaultRange) && defaultRange.length === 2) {
+    return { startDate: defaultRange[0], endDate: defaultRange[1] };
+  }
+  return getDateRange(defaultRange);
+};
+
 const useDateRangeRouteSync = (defaultRange) => {
   const { getQueryString } = useNavigate();
   const { updateParam, removeParam } = useQueryString();
@@ -17,8 +25,8 @@ const useDateRangeRouteSync = (defaultRange) => {
   const dateRange = ref(
     defaultRange
       ? [
-          getDateRange(defaultRange)?.startDate,
-          getDateRange(defaultRange)?.endDate,
+          resolveDefaultRange(defaultRange)?.startDate,
+          resolveDefaultRange(defaultRange)?.endDate,
         ]
       : [],
   );
@@ -32,8 +40,8 @@ const useDateRangeRouteSync = (defaultRange) => {
     }
 
     dateRange.value = [
-      getDateRange(defaultRange)?.startDate,
-      getDateRange(defaultRange)?.endDate,
+      resolveDefaultRange(defaultRange)?.startDate,
+      resolveDefaultRange(defaultRange)?.endDate,
     ];
   };
 

@@ -1,86 +1,58 @@
 <script setup>
-  import GlobalNoticePopup from '@components/common/GlobalNoticePopup.vue';
-  import ToastAlarm from '@components/common/ToastAlarm.vue';
-  import HeaderAdmin from '@components/layout/components/HeaderAdmin.vue';
-  import HeaderMaster from '@components/layout/components/HeaderMaster.vue';
-  import LNBAdmin from '@components/layout/components/LNBAdmin.vue';
-  import LNBMaster from '@components/layout/components/LNBMaster.vue';
-  import { computed } from 'vue';
+  import HeaderAi from '@components/layout/components/HeaderAi.vue';
+  import LNBAi from '@components/layout/components/LNBAi.vue';
+  import { ref } from 'vue';
   import { RouterView } from 'vue-router';
 
-  import useLnbHover from '@/lib/composables/common/useLnbHover.js';
-  import useNavigate from '@/lib/composables/common/useNavigate.js';
-  import { useTokenStore, useUserInfoStore } from '@/stores/auth.js';
+  import useStickyHeader from '@/lib/composables/common/useStickyHeader.js';
   import { useLnbStore } from '@/stores/lnb.js';
 
-  const { hasDetailPage } = useNavigate();
-
-  const { token } = useTokenStore();
-  const userInfoStore = useUserInfoStore();
-
   const lnbStore = useLnbStore();
-  const { lnbLeft, lnbTop, showHoverLNB, startHideHoverLNB } = useLnbHover();
-
-  const isMasterAdmin = computed(() => {
-    return token.userRole === 'master';
-  });
-  const isStoreAdmin = computed(() => {
-    return token.userRole === 'store_admin';
-  });
-
-  const showMasterLNB = computed(() => {
-    return isMasterAdmin.value && !userInfoStore.userInfo.aptUuid;
-  });
+  const scrollContainer = ref(null);
+  const { isScrolled } = useStickyHeader(scrollContainer, 8);
 </script>
 
 <template>
-  <HeaderMaster v-if="isMasterAdmin" />
-  <HeaderAdmin v-else />
-  <div class="mt-[65px] flex h-[calc(100%-65px)] w-full overflow-hidden">
+  <HeaderAi :is-scrolled="isScrolled" />
+  <div class="mt-[60px] flex h-[calc(100%-60px)] w-full overflow-hidden">
     <div
-      :class="`flex-shrink-0 overflow-hidden transition-all duration-300 ${lnbStore.isLNBVisible ? 'w-[266px]' : 'w-0'}`"
+      :class="`flex-shrink-0 overflow-hidden transition-all duration-transition ease-std ${lnbStore.isLNBVisible ? 'w-[240px]' : 'w-0'}`"
     >
-      <LNBMaster v-if="showMasterLNB" />
-      <LNBAdmin v-else />
+      <LNBAi />
     </div>
     <main
-      :class="`h-[calc(100vh-74px)] flex-1 overflow-y-auto ${hasDetailPage ? undefined : 'p-8'}`"
+      ref="scrollContainer"
+      class="h-[calc(100vh-60px)] flex-1 overflow-y-auto bg-linear-bg px-8 py-8"
     >
-      <RouterView />
+      <RouterView v-slot="{ Component }">
+        <Transition name="route-fade" mode="out-in">
+          <component :is="Component" />
+        </Transition>
+      </RouterView>
     </main>
   </div>
-
-  <!-- LNB 닫힌 상태에서 햄버거 버튼 hover 시 표시되는 fixed LNB -->
-  <!-- eslint-disable vuejs-accessibility/mouse-events-have-key-events -->
-  <Transition name="lnb-hover-dropdown">
-    <div
-      v-if="!lnbStore.isLNBVisible && lnbStore.isHoverLNBVisible"
-      class="fixed z-50 shadow-lg"
-      :style="{ top: `${lnbTop}px`, left: `${lnbLeft}px`, height: `calc(100vh - ${lnbTop}px)` }"
-      @mouseenter="showHoverLNB"
-      @mouseleave="startHideHoverLNB"
-    >
-      <LNBMaster v-if="showMasterLNB" />
-      <LNBAdmin v-else />
-    </div>
-  </Transition>
-
-  <!-- 아파트 관리자에게만 전체 공지사항 팝업 표시 -->
-  <GlobalNoticePopup v-if="!isMasterAdmin && !isStoreAdmin" />
-
-  <!-- 토스트 -->
-  <ToastAlarm />
 </template>
 
 <style scoped>
-  .lnb-hover-dropdown-enter-active,
-  .lnb-hover-dropdown-leave-active {
-    transition: opacity 0.2s ease, transform 0.2s ease;
+  .route-fade-enter-active {
+    transition:
+      opacity 350ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .lnb-hover-dropdown-enter-from,
-  .lnb-hover-dropdown-leave-to {
+  .route-fade-leave-active {
+    transition:
+      opacity 150ms cubic-bezier(0.7, 0, 0.84, 0),
+      transform 150ms cubic-bezier(0.7, 0, 0.84, 0);
+  }
+
+  .route-fade-enter-from {
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateY(8px);
+  }
+
+  .route-fade-leave-to {
+    opacity: 0;
+    transform: translateY(-4px);
   }
 </style>

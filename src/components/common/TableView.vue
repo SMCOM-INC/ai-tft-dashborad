@@ -7,11 +7,7 @@
   import { computed, reactive, ref, watch } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
 
-  import { CHIP_TYPE_COLUMNS } from '@/constants/board.js';
-  import { REGULAR_CAR_TYPE } from '@/constants/parking.js';
   import decodeUrl from '@/lib/utils/decodeUrl.js';
-  import findCarType from '@/lib/utils/findCarType.js';
-  import findRegistType from '@/lib/utils/findRegistType.js';
   import formatContact from '@/lib/utils/formatContact.js';
   import { formatDate } from '@/lib/utils/formatDate.js';
   import formatMinutes from '@/lib/utils/formatMinutes.js';
@@ -48,8 +44,13 @@
     isError: { type: Boolean, default: false },
     error: { type: Object, default: undefined },
   });
-
   const emit = defineEmits(['bulkAction']);
+  // AI 콜센터 전용 빌드 — 도메인 의존성 stub
+  const CHIP_TYPE_COLUMNS = [];
+  const REGULAR_CAR_TYPE = [];
+  const findCarType = () => '';
+  const findRegistType = () => '';
+
   const route = useRoute();
   const router = useRouter();
 
