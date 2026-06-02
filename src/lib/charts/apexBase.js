@@ -21,12 +21,12 @@ export const apexBase = {
     axisBorder: { color: '#E5E7EB' },
     axisTicks: { color: '#E5E7EB' },
     labels: {
-      style: { fontSize: '12px', colors: '#6C727E' },
+      style: { fontSize: '12px', colors: '#6C727E', cssClass: 'tabular-nums' },
     },
   },
   yaxis: {
     labels: {
-      style: { fontSize: '12px', colors: '#6C727E' },
+      style: { fontSize: '12px', colors: '#6C727E', cssClass: 'tabular-nums' },
     },
   },
   tooltip: {

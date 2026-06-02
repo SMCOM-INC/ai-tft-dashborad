@@ -363,6 +363,29 @@ export default {
           danger: '#EF4444',
           info: '#3B82F6',
         },
+        toss: {
+          blue: {
+            50: '#E8F3FF',
+            500: '#3182F6',
+            600: '#2272EB',
+            700: '#1B64DA',
+          },
+          grey: {
+            50: '#F9FAFB',
+            100: '#F2F4F6',
+            200: '#E5E8EB',
+            300: '#D1D6DB',
+            400: '#B0B8C1',
+            500: '#8B95A1',
+            600: '#6B7684',
+            700: '#4E5968',
+            800: '#333D4B',
+            900: '#191F28',
+          },
+          green: '#15B36B',
+          orange: '#F2A024',
+          red: '#F04452',
+        },
         chart: {
           1: '#5E6AD2',
           2: '#3B82F6',
@@ -438,6 +461,7 @@ export default {
       fontFamily: {
         inter: ['Inter', 'Pretendard', 'sans-serif'],
         mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        tossface: ['Tossface'],
       },
       transitionDuration: {
         micro: '150ms',

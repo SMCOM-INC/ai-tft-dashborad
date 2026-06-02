@@ -1,13 +1,9 @@
 <script setup>
-  import CardBase from '@components/common/CardBase.vue';
+  import TossCard from '@views/AiDashboardView/components/TossCard.vue';
   import ApexCharts from 'apexcharts';
-  import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+  import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 
-  import {
-    apexBase,
-    chartPalette,
-    mergeChartOptions,
-  } from '@/lib/charts/apexBase.js';
+  import { apexBase, mergeChartOptions } from '@/lib/charts/apexBase.js';
 
   const props = defineProps({
     data: {
@@ -19,6 +15,8 @@
   const chartRef = ref(null);
   let chart = null;
   let simInterval = null;
+
+  const isEmpty = computed(() => Object.keys(props.data || {}).length === 0);
 
   const seriesData = computed(() => {
     const entries = Object.entries(props.data).sort(([a], [b]) =>
@@ -32,14 +30,23 @@
       series: [{ name: '상담 건수', data: seriesData.value }],
       chart: {
         ...apexBase.chart,
-        type: 'line',
+        type: 'area',
         height: 280,
         group: 'dashboard-lines',
         id: 'daily-count',
       },
-      colors: [chartPalette[0]],
+      colors: ['#3182F6'],
       stroke: { curve: 'smooth', width: 2.5 },
       markers: { size: 0, hover: { size: 5 } },
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shadeIntensity: 1,
+          opacityFrom: 0.18,
+          opacityTo: 0,
+          stops: [0, 95],
+        },
+      },
       yaxis: {
         ...apexBase.yaxis,
         title: { text: '건수', style: { fontSize: '12px', color: '#6C727E' } },
@@ -73,15 +80,33 @@
     }, 1500);
   };
 
-  onMounted(() => {
-    if (!chartRef.value) return;
+  const renderChart = async () => {
+    await nextTick();
+    if (!chartRef.value || chart) return;
     chart = new ApexCharts(chartRef.value, buildOptions());
     chart.render().then(() => startLiveSim());
+  };
+
+  const destroyChart = () => {
+    if (simInterval) {
+      clearInterval(simInterval);
+      simInterval = null;
+    }
+    if (chart) {
+      chart.destroy();
+      chart = null;
+    }
+  };
+
+  onMounted(() => {
+    if (!isEmpty.value) renderChart();
   });
 
-  onUnmounted(() => {
-    if (simInterval) clearInterval(simInterval);
-    if (chart) chart.destroy();
+  onUnmounted(destroyChart);
+
+  watch(isEmpty, (empty) => {
+    if (empty) destroyChart();
+    else renderChart();
   });
 
   watch(seriesData, (newData) => {
@@ -90,14 +115,35 @@
 </script>
 
 <template>
-  <CardBase>
+  <TossCard>
     <div class="space-y-4">
-      <h2
-        class="font-inter text-[15px] font-semibold tracking-tight text-linear-text"
+      <header class="flex items-start gap-2.5">
+        <span
+          class="flex h-9 w-9 shrink-0 items-center justify-center rounded-[12px] bg-toss-blue-50"
+        >
+          <span class="font-tossface text-[18px] leading-none">📈</span>
+        </span>
+        <div class="space-y-0.5">
+          <h2 class="text-[16px] font-bold tracking-tight text-toss-grey-900">
+            일자별 상담 건수
+          </h2>
+          <p class="text-[12px] text-toss-grey-500">
+            선택 기간 동안의 일별 상담량 추이
+          </p>
+        </div>
+      </header>
+      <div
+        v-if="isEmpty"
+        class="flex h-[280px] flex-col items-center justify-center gap-1 text-center"
       >
-        일자별 상담 건수
-      </h2>
-      <div ref="chartRef" class="w-full"></div>
+        <p class="text-[13px] font-medium text-toss-grey-700">
+          표시할 데이터가 없어요
+        </p>
+        <p class="text-[12px] text-toss-grey-500">
+          선택한 기간에 상담 내역이 없어요
+        </p>
+      </div>
+      <div v-else ref="chartRef" class="w-full"></div>
     </div>
-  </CardBase>
+  </TossCard>
 </template>

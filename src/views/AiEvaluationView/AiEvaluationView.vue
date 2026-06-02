@@ -1,8 +1,8 @@
 <script setup>
-  import CardBase from '@components/common/CardBase.vue';
   import DateRangePicker from '@components/common/DateRangePicker.vue';
   import SkeletonBase from '@components/common/SkeletonBase.vue';
   import AiDistributionBar from '@views/AiEvaluationView/components/AiDistributionBar.vue';
+  import AiEvaluationSummaryBand from '@views/AiEvaluationView/components/AiEvaluationSummaryBand.vue';
   import AiScoreCard from '@views/AiEvaluationView/components/AiScoreCard.vue';
   import { computed } from 'vue';
 
@@ -58,16 +58,11 @@
 
     <template v-else>
       <div class="stagger-item" :style="{ '--i': 0 }">
-        <CardBase>
-          <p class="text-[13px] font-medium text-linear-text-secondary">
-            기간 내 평가 건수
-          </p>
-          <p
-            class="font-inter text-[28px] font-semibold tracking-tight text-linear-text tabular-nums"
-          >
-            {{ totalCount.toLocaleString() }}건
-          </p>
-        </CardBase>
+        <AiEvaluationSummaryBand
+          :total-count="totalCount"
+          :avg-score-total="scoreCardValues.avgScoreTotal"
+          :distribution="distribution"
+        />
       </div>
 
       <div class="grid grid-cols-4 gap-6">

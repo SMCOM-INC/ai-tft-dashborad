@@ -12,6 +12,8 @@
     decimals: { type: Number, default: 0 },
     pulse: { type: Boolean, default: false },
     interactive: { type: Boolean, default: false },
+    accent: { type: Boolean, default: false },
+    hint: { type: String, default: '' },
   });
 
   const cardRef = ref(null);
@@ -27,7 +29,7 @@
         </p>
         <div class="flex items-baseline gap-1.5">
           <p
-            class="font-inter text-[28px] font-semibold leading-9 tracking-tight text-linear-text"
+            :class="`font-inter text-[28px] font-semibold leading-9 tracking-tight ${props.accent ? 'text-linear-accent' : 'text-linear-text'}`"
           >
             <AnimatedNumber :value="props.value" :decimals="props.decimals" />
           </p>
@@ -38,6 +40,9 @@
             {{ props.unit }}
           </span>
         </div>
+        <p v-if="props.hint" class="text-[12px] text-linear-text-muted">
+          {{ props.hint }}
+        </p>
       </div>
     </CardBase>
   </div>

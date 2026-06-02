@@ -11,6 +11,7 @@
   } from '@/constants/aiCallCenter.js';
   import useDateRangeRouteSync from '@/lib/composables/common/useDateRangeRouteSync.js';
   import useGetAiCalls from '@/lib/queries/aiCallCenter/useGetAiCalls.js';
+  import useGetAiEvaluation from '@/lib/queries/aiCallCenter/useGetAiEvaluation.js';
   import decodeUrl from '@/lib/utils/decodeUrl.js';
 
   const { dateRange } = useDateRangeRouteSync(AI_DEFAULT_DATE_RANGE);
@@ -18,12 +19,14 @@
   const { aiCalls, isAiCallsLoading, isAiCallsError, aiCallsError } =
     useGetAiCalls();
 
+  const { aiEvaluation, isAiEvaluationLoading } = useGetAiEvaluation();
+
   const summary = computed(() => ({
-    count: aiCalls.value?.count ?? 0,
-    avgScoreTotal: aiCalls.value?.avg_score_total ?? 0,
-    avgScoreSpeed: aiCalls.value?.avg_score_speed ?? 0,
-    avgScoreAccuracy: aiCalls.value?.avg_score_accuracy ?? 0,
-    avgScoreProfessionalism: aiCalls.value?.avg_score_professionalism ?? 0,
+    count: aiCalls.value?.total ?? 0,
+    avgScoreTotal: aiEvaluation.value?.avg_score_total ?? 0,
+    avgScoreSpeed: aiEvaluation.value?.avg_score_speed ?? 0,
+    avgScoreAccuracy: aiEvaluation.value?.avg_score_accuracy ?? 0,
+    avgScoreProfessionalism: aiEvaluation.value?.avg_score_professionalism ?? 0,
   }));
 
   const tableData = computed(() => {
@@ -82,7 +85,10 @@
     </div>
 
     <div class="stagger-item" :style="{ '--i': 0 }">
-      <AiCallsSummary :summary="summary" :is-loading="isAiCallsLoading" />
+      <AiCallsSummary
+        :summary="summary"
+        :is-loading="isAiCallsLoading || isAiEvaluationLoading"
+      />
     </div>
 
     <div class="stagger-item" :style="{ '--i': 1 }">
