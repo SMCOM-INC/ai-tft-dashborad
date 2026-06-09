@@ -42,6 +42,14 @@ export const AI_CALLS_TABLE_COLUMNS = [
   { name: '종합점수', key: 'scoreTotal' },
 ];
 
+// 통화시간(초) 구간 필터 — [min, max) 반열림 구간 (추후 API 전환 시 동일 key 사용)
+export const AI_CALLS_DURATION_RANGES = [
+  { key: '0-30', label: '30초 미만', min: 0, max: 30 },
+  { key: '30-60', label: '30~60초', min: 30, max: 60 },
+  { key: '60-180', label: '60~180초', min: 60, max: 180 },
+  { key: '180-', label: '180초 이상', min: 180, max: Infinity },
+];
+
 // 카테고리 도넛 색상 팔레트
 export const AI_CATEGORY_COLORS = [
   '#3B82F6',
