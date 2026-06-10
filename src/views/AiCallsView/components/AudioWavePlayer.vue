@@ -13,6 +13,7 @@
   const isPlaying = ref(false);
   const currentTime = ref(0);
   const duration = ref(0);
+  const loadError = ref(false);
 
   let wavesurfer = null;
 
@@ -37,6 +38,7 @@
     isPlaying.value = false;
     currentTime.value = 0;
     duration.value = 0;
+    loadError.value = false;
 
     wavesurfer = WaveSurfer.create({
       container: waveformRef.value,
@@ -68,6 +70,10 @@
     wavesurfer.on('finish', () => {
       isPlaying.value = false;
     });
+    wavesurfer.on('error', () => {
+      loadError.value = true;
+      isReady.value = false;
+    });
   };
 
   const togglePlay = () => {
@@ -94,6 +100,26 @@
 <template>
   <div class="space-y-2">
     <div
+      v-if="loadError"
+      class="flex items-center gap-2 rounded-linear-md border border-dashed border-linear-border bg-linear-surface px-4 py-5 text-[13px] text-linear-text-muted"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        class="h-4 w-4 shrink-0"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="9" />
+        <path d="M5.6 5.6l12.8 12.8" />
+      </svg>
+      통화 음원을 불러올 수 없습니다.
+    </div>
+
+    <div
+      v-else
       class="flex items-center gap-4 rounded-linear-md border border-linear-border bg-linear-surface px-4 py-3"
     >
       <button

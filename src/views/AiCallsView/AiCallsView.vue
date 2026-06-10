@@ -7,6 +7,7 @@
   import AiCallsSummary from '@views/AiCallsView/components/AiCallsSummary.vue';
   import { computed, ref } from 'vue';
 
+  import { getAiCallAudioUrl } from '@/apis/aiCallCenter.js';
   import {
     AI_CALLS_DURATION_RANGES,
     AI_CALLS_TABLE_COLUMNS,
@@ -40,7 +41,7 @@
 
   const tableData = computed(() => {
     const calls = aiCalls.value?.calls || [];
-    const content = calls.map((call, index) => ({
+    const content = calls.map((call) => ({
       id: call.id,
       date: call.date,
       duration: call.duration,
@@ -52,10 +53,11 @@
       scoreAccuracy: call.score_accuracy,
       scoreProfessionalism: call.score_professionalism,
       scoreTotal: call.score_total,
-      // TODO: API 연동 시 call.audio_url / call.transcript 로 교체
-      // 데모: 4번째 행마다 녹음 없음(빈 상태) 재현, 전문은 모달 목데이터 사용
-      audioUrl: index % 4 === 0 ? null : '/test.wav',
-      transcript: call.transcript ?? null,
+      // 통화 음원: /calls/{id}/audio 엔드포인트 URL (WaveSurfer src). 파일 없으면 플레이어가 404 처리
+      audioUrl: call.id ? getAiCallAudioUrl(call.id) : null,
+      // 통화 원문: 원본(화자라벨) / 가공본 — 없으면 모달이 목데이터로 fallback
+      originalText: call.original_text ?? null,
+      correctedText: call.corrected_text ?? null,
     }));
 
     return {
