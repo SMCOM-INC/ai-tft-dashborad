@@ -295,6 +295,20 @@ const formatTimeToHHMM = (time) => {
 const toStartDateTime = (dateStr) => `${dateStr.slice(0, 10)} 00:00:00`;
 const toEndDateTime = (dateStr) => `${dateStr.slice(0, 10)} 23:59:59`;
 
+// 오늘 기준 한 달 전 Date (00:00:00) — 날짜 선택 가능 최소일
+const getOneMonthAgoDate = () => {
+  const date = new Date();
+  date.setMonth(date.getMonth() - 1);
+  date.setHours(0, 0, 0, 0);
+  return date;
+};
+
+// 최근 한 달 범위 ['yyyy-MM-dd'(한 달 전), 'yyyy-MM-dd'(오늘)]
+const getRecentMonthRange = () => [
+  formatDateObject(getOneMonthAgoDate(), 'hyphen'),
+  formatDateObject(new Date(), 'hyphen'),
+];
+
 export {
   convertTimeStringToTimeObject,
   convertTimeObjectToTimeString,
@@ -307,4 +321,6 @@ export {
   formatTimeToHHMM,
   toStartDateTime,
   toEndDateTime,
+  getOneMonthAgoDate,
+  getRecentMonthRange,
 };

@@ -2,12 +2,15 @@
   import VueDatePicker from '@vuepic/vue-datepicker';
   import { ref, watch } from 'vue';
 
+  import { getOneMonthAgoDate } from '@/lib/utils/formatDate.js';
+
   const props = defineProps({
     modelValue: { type: Array, required: false, default: () => [] },
     placeholder: { type: String, required: false, default: '기간 선택' },
     className: { type: String, required: false, default: 'w-[260px]' },
     maxDate: { type: Date, required: false, default: () => new Date() },
-    minDate: { type: Date, required: false, default: null },
+    // 기본 선택 가능 최소일: 오늘 기준 한 달 전 (최근 한 달만 조회)
+    minDate: { type: Date, required: false, default: () => getOneMonthAgoDate() },
     disabled: { type: Boolean, required: false, default: false },
   });
 

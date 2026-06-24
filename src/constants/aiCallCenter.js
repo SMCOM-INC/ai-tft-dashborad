@@ -1,5 +1,7 @@
-// 데이터가 존재하는 기간 (임시 고정값)
-export const AI_DEFAULT_DATE_RANGE = ['2026-03-01', '2026-03-31'];
+import { getRecentMonthRange } from '@/lib/utils/formatDate.js';
+
+// 기본 조회 기간: 오늘 기준 최근 한 달 (한 달 전 ~ 오늘)
+export const AI_DEFAULT_DATE_RANGE = getRecentMonthRange();
 
 // AI 콜센터 LNB 메뉴
 export const AI_CALL_CENTER_LNB_MENU = [
