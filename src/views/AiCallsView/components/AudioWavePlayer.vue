@@ -55,6 +55,7 @@
     });
 
     wavesurfer.on('ready', (audioDuration) => {
+
       isReady.value = true;
       duration.value = audioDuration;
     });

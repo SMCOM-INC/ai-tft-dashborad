@@ -19,6 +19,10 @@
   const MOCK_CORRECTED_TEXT =
     '상담사 : 안녕하세요, 행복아파트 관리사무소입니다. 무엇을 도와드릴까요?\n고객 : 네, 안녕하세요. 저희 집 주차 등록이 안 되어 있다고 떠서요. 분명히 지난달에 등록했는데요.\n상담사 : 불편을 드려 죄송합니다. 확인해 드리겠습니다. 동호수와 차량번호 알려주시겠어요?\n고객 : 101동 1502호고요, 차량번호는 12가 3456입니다.\n상담사 : 확인해 보니 지난달 신청 건이 서류 미비로 보류되어 있었네요. 신분증 사본이 누락되어 있었습니다.\n고객 : 아, 그런 안내를 못 받았는데요. 그럼 지금 어떻게 해야 하나요?\n상담사 : 지금 바로 등록 도와드리겠습니다. 입주민 앱으로 신분증 사진만 다시 올려주시면 오늘 중으로 처리됩니다.\n고객 : 네, 알겠습니다. 그럼 오늘 안에 주차 가능한 거죠?\n상담사 : 네, 등록 완료되면 문자로 안내드리겠습니다. 더 도와드릴 부분 있으실까요?\n고객 : 아니요, 감사합니다. 수고하세요.';
 
+  // 데모용 평가 요약 목데이터 — API 연동 시 call.evaluationSummary 값으로 대체됨 (점수 산정 근거)
+  const MOCK_EVALUATION_SUMMARY =
+    '고객 본인 확인과 보류 사유 안내가 신속하고 정확하게 이루어졌으며, 해결 방법을 명확히 안내해 전문성이 높게 평가되었습니다. 다만 보류 사실을 고객이 사전에 인지하지 못한 점에 대한 선제적 사과·재발 방지 안내가 보완되면 더 좋겠습니다.';
+
   const metaItems = computed(() => [
     { label: '관리번호', value: props.call.id },
     { label: '통화일시', value: props.call.date },
@@ -43,6 +47,14 @@
   const summaryText = computed(() => {
     const value = props.call.summary;
     return typeof value === 'string' && value ? decodeUrl(value) : '-';
+  });
+
+  // 평가 요약 (점수 산정 근거) — API가 내려주면 그것을, 아직 없으면 목데이터 사용
+  const evaluationSummaryText = computed(() => {
+    const value = props.call.evaluationSummary;
+    const raw =
+      typeof value === 'string' && value ? value : MOCK_EVALUATION_SUMMARY;
+    return decodeUrl(raw);
   });
 
   // 녹음 파일 유무 (API의 audioUrl 기준) — 없으면 빈 상태 노출
@@ -176,6 +188,17 @@
               class="whitespace-pre-line text-[14px] leading-6 text-linear-text-secondary"
             >
               {{ summaryText }}
+            </p>
+          </div>
+
+          <div class="space-y-2">
+            <p class="text-[12px] font-medium text-linear-text-muted">
+              평가 요약
+            </p>
+            <p
+              class="whitespace-pre-line rounded-linear-md border border-linear-border bg-linear-surface px-4 py-3 text-[13px] leading-6 text-linear-text-secondary"
+            >
+              {{ evaluationSummaryText }}
             </p>
           </div>
 

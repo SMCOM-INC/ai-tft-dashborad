@@ -49,6 +49,8 @@
       categorySub: call.category_sub,
       categoryDetail: call.category_detail,
       summary: call.summary,
+      // 평가 요약: 점수 산정 근거 — 없으면 모달이 목데이터로 fallback
+      evaluationSummary: call.evaluation_summary ?? null,
       scoreSpeed: call.score_speed,
       scoreAccuracy: call.score_accuracy,
       scoreProfessionalism: call.score_professionalism,
